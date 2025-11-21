@@ -90,6 +90,19 @@ Para cada petición GET se registra:
 
 ## Resultados de las Peticiones GET
 
+### Tabla de Resultados
+
+| Método | URL | Código de estado | Tiempo respuesta | Observaciones CORS |
+|--------|-----|------------------|------------------|--------------------|
+| GET | https://rickandmortyapi.com/api/character/1 | 200 OK | ~100-250ms | `*` (Permite todos los orígenes) |
+| GET | https://rickandmortyapi.com/api/character | 200 OK | ~150-300ms | `*` (Permite todos los orígenes) |
+| GET | https://rickandmortyapi.com/api/location/1 | 200 OK | ~100-200ms | `*` (Permite todos los orígenes) |
+| GET | https://rickandmortyapi.com/api/location | 200 OK | ~150-300ms | `*` (Permite todos los orígenes) |
+| GET | https://rickandmortyapi.com/api/episode/1 | 200 OK | ~100-200ms | `*` (Permite todos los orígenes) |
+| GET | https://rickandmortyapi.com/api/episode | 200 OK | ~150-300ms | `*` (Permite todos los orígenes) |
+
+### Resumen por Recurso
+
 | Recurso | Endpoint | Código de Estado | Tiempo Respuesta | Datos Retornados |
 |---------|----------|------------------|------------------|------------------|
 | Personaje específico | `/api/character/1` | 200 OK | ~100-250ms | Datos completos + imagen |
