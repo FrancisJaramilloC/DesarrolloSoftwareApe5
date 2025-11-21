@@ -1,10 +1,15 @@
-# Práctica de Peticiones HTTP/HTTPS
+# Rick & Morty API Explorer
 
 ## Objetivo
-Comprender y aplicar los conceptos de HTTP/HTTPS, métodos REST, códigos de estado y CORS desde el entorno del frontend. Esta práctica implementa una página web responsiva y semántica que realiza peticiones simuladas a un servidor, registrando, analizando y documentando los resultados obtenidos.
+Comprender y aplicar los conceptos de HTTP/HTTPS, métodos REST (específicamente GET), códigos de estado y CORS desde el entorno del frontend. Esta práctica implementa una página web responsiva y semántica que realiza peticiones a la API de Rick and Morty, registrando, analizando y documentando los resultados obtenidos.
 
 ## Descripción del Proyecto
-Aplicación web interactiva que permite realizar peticiones HTTP utilizando los métodos REST más comunes (GET, POST, PUT, DELETE) hacia la API pública JSONPlaceholder. La aplicación registra y muestra información detallada sobre cada petición, incluyendo tiempos de respuesta, códigos de estado, headers y políticas CORS.
+Explorador web interactivo que permite realizar peticiones HTTP GET hacia la API pública de Rick and Morty, accediendo a tres tipos de recursos:
+- **Personajes**: 826 personajes de la serie
+- **Ubicaciones**: 126 ubicaciones del universo Rick and Morty
+- **Episodios**: 51 episodios de la serie
+
+La aplicación registra y muestra información detallada sobre cada petición, incluyendo tiempos de respuesta, códigos de estado, headers y políticas CORS, con una interfaz moderna y atractiva.
 
 ## Equipos y Herramientas
 
@@ -15,7 +20,7 @@ Aplicación web interactiva que permite realizar peticiones HTTP utilizando los 
 
 ### APIs y Bibliotecas
 - **Fetch API**: Para realizar solicitudes HTTP asíncronas
-- **JSONPlaceholder**: API REST de prueba (https://jsonplaceholder.typicode.com)
+- **Rick and Morty API**: API REST pública (https://rickandmortyapi.com)
 
 ### Herramientas de Desarrollo
 - **VS Code**: Editor de código
@@ -26,71 +31,79 @@ Aplicación web interactiva que permite realizar peticiones HTTP utilizando los 
 
 ## Procedimiento / Metodología
 
-### 1. Métodos HTTP Implementados
+### 1. Recursos Disponibles
 
-#### GET
-- **Propósito**: Obtener/recuperar un recurso existente
-- **Endpoint**: `/posts/{id}`
-- **Características**: 
-  - No modifica datos en el servidor
-  - Es idempotente (múltiples peticiones producen el mismo resultado)
-  - Respuesta cacheable
+#### Personajes (Characters)
+- **Total**: 826 personajes
+- **Endpoints**:
+  - `GET /api/character/{id}` - Obtener un personaje específico
+  - `GET /api/character` - Obtener lista paginada de personajes
+- **Datos incluidos**: Nombre, estado (vivo/muerto/desconocido), especie, género, origen, ubicación, imagen, episodios
 
-#### POST
-- **Propósito**: Crear un nuevo recurso
-- **Endpoint**: `/posts`
-- **Características**:
-  - Envía datos en el body de la petición
-  - No es idempotente
-  - Retorna el recurso creado (normalmente con código 201)
+#### Ubicaciones (Locations)
+- **Total**: 126 ubicaciones
+- **Endpoints**:
+  - `GET /api/location/{id}` - Obtener una ubicación específica
+  - `GET /api/location` - Obtener lista paginada de ubicaciones
+- **Datos incluidos**: Nombre, tipo, dimensión, residentes, fecha de creación
 
-#### PUT
-- **Propósito**: Actualizar completamente un recurso existente
-- **Endpoint**: `/posts/{id}`
-- **Características**:
-  - Reemplaza el recurso completo
-  - Es idempotente
-  - Requiere enviar todos los campos del recurso
+#### Episodios (Episodes)
+- **Total**: 51 episodios
+- **Endpoints**:
+  - `GET /api/episode/{id}` - Obtener un episodio específico
+  - `GET /api/episode` - Obtener lista paginada de episodios
+- **Datos incluidos**: Nombre, código del episodio, fecha de emisión, personajes, fecha de creación
 
-#### DELETE
-- **Propósito**: Eliminar un recurso
-- **Endpoint**: `/posts/{id}`
-- **Características**:
-  - Es idempotente
-  - Retorna código 200 o 204 en caso de éxito
+### 2. Método HTTP Implementado: GET
 
-### 2. Implementación de la Práctica
+#### Características del método GET
+- **Propósito**: Obtener/recuperar recursos existentes
+- **Seguro**: No modifica datos en el servidor
+- **Idempotente**: Múltiples peticiones producen el mismo resultado
+- **Cacheable**: Las respuestas pueden ser almacenadas en caché
+- **Sin body**: Los parámetros se envían en la URL
 
-1. **Creación de la estructura HTML**: Página semántica con controles para cada método HTTP
-2. **Diseño CSS responsivo**: Interfaz adaptable a diferentes dispositivos
-3. **Implementación JavaScript**: Funciones asíncronas con Fetch API
-4. **Registro de logs**: Sistema dual de logging (consola del navegador + interfaz visual)
-5. **Visualización de resultados**: Cards dinámicas con información detallada de cada petición
+### 3. Implementación de la Práctica
 
-### 3. Análisis de Resultados
+1. **Selector de recursos**: Interfaz para elegir entre Personajes, Ubicaciones o Episodios
+2. **Estructura HTML semántica**: Página responsiva con controles intuitivos
+3. **Diseño CSS moderno**: Interfaz glassmorphism con animaciones y transiciones suaves
+4. **JavaScript con Fetch API**: Funciones asíncronas para peticiones HTTP GET
+5. **Registro de logs**: Sistema dual de logging (consola del navegador + interfaz visual)
+6. **Visualización enriquecida**: 
+   - Vista detallada individual con imágenes (personajes)
+   - Vista de lista con los primeros 10 resultados
+   - Información de paginación
+   - JSON completo expandible
 
-Para cada petición se registra:
+### 4. Análisis de Resultados
+
+Para cada petición GET se registra:
 - **URL solicitada**: Endpoint completo de la API
-- **Método HTTP**: GET, POST, PUT o DELETE
-- **Código de estado**: Respuesta del servidor (200, 201, 404, etc.)
+- **Método HTTP**: GET
+- **Código de estado**: Respuesta del servidor (200 OK o 404 Not Found)
 - **Tiempo de respuesta**: Medido en milisegundos usando Performance API
-- **Headers**: Request y Response headers
-- **Política CORS**: Access-Control-Allow-Origin y otros headers relacionados
+- **Headers**: Response headers del servidor
+- **Política CORS**: Access-Control-Allow-Origin (permite todos los orígenes: *)
 - **Datos de respuesta**: Body de la respuesta en formato JSON
+- **Visualización específica**: Vista adaptada según el tipo de recurso solicitado
 
-## Resultados de las Peticiones
+## Resultados de las Peticiones GET
 
-| Método | URL | Código de Estado | Tiempo Respuesta | Observaciones CORS |
-|--------|-----|------------------|------------------|-------------------|
-| GET | https://jsonplaceholder.typicode.com/posts/1 | 200 OK | ~150-300ms | `*` (Permite todos los orígenes) |
-| POST | https://jsonplaceholder.typicode.com/posts | 201 Created | ~200-350ms | `*` (Permite todos los orígenes) |
-| PUT | https://jsonplaceholder.typicode.com/posts/1 | 200 OK | ~180-320ms | `*` (Permite todos los orígenes) |
-| DELETE | https://jsonplaceholder.typicode.com/posts/1 | 200 OK | ~150-280ms | `*` (Permite todos los orígenes) |
+| Recurso | Endpoint | Código de Estado | Tiempo Respuesta | Datos Retornados |
+|---------|----------|------------------|------------------|------------------|
+| Personaje específico | `/api/character/1` | 200 OK | ~100-250ms | Datos completos + imagen |
+| Lista de personajes | `/api/character` | 200 OK | ~150-300ms | 20 resultados paginados |
+| Ubicación específica | `/api/location/1` | 200 OK | ~100-200ms | Datos completos |
+| Lista de ubicaciones | `/api/location` | 200 OK | ~150-300ms | 20 resultados paginados |
+| Episodio específico | `/api/episode/1` | 200 OK | ~100-200ms | Datos completos |
+| Lista de episodios | `/api/episode` | 200 OK | ~150-300ms | 20 resultados paginados |
 
 ### Notas sobre CORS
-- JSONPlaceholder permite peticiones desde cualquier origen (`Access-Control-Allow-Origin: *`)
+- La API de Rick and Morty permite peticiones desde cualquier origen (`Access-Control-Allow-Origin: *`)
 - Los headers CORS se pueden observar en la pestaña Network de DevTools
-- Para APIs con restricciones CORS, se requeriría configuración del lado del servidor
+- No requiere autenticación ni API keys
+- Perfecta para prácticas educativas de HTTP/REST
 
 ## Códigos de Estado HTTP Comunes
 
@@ -107,37 +120,58 @@ Para cada petición se registra:
 
 ## Instrucciones de Uso
 
-1. **Clonar o descargar el repositorio**
-2. **Abrir el proyecto en VS Code**
-3. **Instalar la extensión Live Server** (si no está instalada)
-4. **Hacer clic derecho en `index.html`** y seleccionar "Open with Live Server"
-5. **Abrir las Developer Tools** (F12 en la mayoría de navegadores)
-6. **Ir a la pestaña Network** para observar las peticiones HTTP
-7. **Hacer clic en los botones** GET, POST, PUT o DELETE
-8. **Observar los resultados** en la interfaz y en la consola
-9. **Analizar los headers** y políticas CORS en la pestaña Network
+1. **Abrir el proyecto**: Abre `index.html` con Live Server en VS Code
+2. **Seleccionar tipo de recurso**: Haz clic en Personajes, Ubicaciones o Episodios
+3. **Consultar un recurso específico**:
+   - Ingresa un ID válido en el campo de entrada
+   - Haz clic en "Obtener Recurso (GET)"
+4. **Consultar lista de recursos**:
+   - Haz clic en "Obtener Todos (GET)" para ver los primeros 10 resultados
+5. **Abrir Developer Tools** (F12):
+   - Ve a la pestaña **Network**
+   - Observa las peticiones HTTP en tiempo real
+   - Revisa los headers de request y response
+   - Analiza la política CORS
+6. **Explorar los resultados**:
+   - Para personajes: verás imagen, estado, especie, ubicación, etc.
+   - Para ubicaciones: verás tipo, dimensión, número de residentes
+   - Para episodios: verás código, fecha de emisión, personajes
+7. **Revisar los logs**: Observa el registro de actividad con timestamps
 
 ## Características Destacadas
 
-### 🎨 Diseño Responsivo
+### 🎨 Diseño Moderno
+- Interfaz glassmorphism con efectos de vidrio translúcido
+- Fondo animado con círculos de colores
 - Adaptable a dispositivos móviles, tablets y escritorio
-- Uso de CSS Grid y Flexbox
-- Variables CSS para fácil personalización
+- Transiciones y animaciones suaves
+- Tema oscuro para mejor experiencia visual
 
-### 📊 Visualización Completa
-- Registro visual de logs en tiempo real
-- Cards informativas con todos los detalles de cada petición
-- Formato JSON legible con syntax highlighting
+### 📊 Explorador de Recursos
+- **3 tipos de recursos**: Personajes, Ubicaciones y Episodios
+- Vista individual detallada con imágenes (personajes)
+- Vista de lista con primeros 10 resultados
+- Información de paginación (total, páginas)
+- Estadísticas en tiempo real de la API
+
+### 🎯 Visualización Enriquecida
+- **Personajes**: Imagen, estado (vivo/muerto), especie, origen, ubicación
+- **Ubicaciones**: Tipo, dimensión, número de residentes
+- **Episodios**: Código, fecha de emisión, número de personajes
+- JSON completo expandible para análisis detallado
+- Badges de estado con colores diferenciados
 
 ### ⚡ Performance
 - Medición precisa del tiempo de respuesta
-- Manejo eficiente de peticiones asíncronas
-- Feedback visual durante las peticiones (loading states)
+- Manejo eficiente de peticiones asíncronas con Fetch API
+- Estados de carga con spinners animados
+- Validación de IDs según el tipo de recurso
 
-### 🔍 Debugging
-- Logs detallados en consola del navegador
-- Información completa de headers
-- Visualización de datos de request y response
+### 🔍 Debugging Avanzado
+- Logs con timestamps en tiempo real
+- Registro tanto visual como en consola del navegador
+- Información completa de CORS y headers
+- Manejo robusto de errores 404
 
 ## Estructura del Proyecto
 
@@ -147,30 +181,102 @@ DesarrolloSoftwareAPE5/
 ├── index.html          # Estructura HTML semántica
 ├── styles.css          # Estilos CSS responsivos
 ├── script.js           # Lógica JavaScript con Fetch API
-└── README.md           # Documentación del proyecto
+├── README.md           # Documentación del proyecto
+└── API_INFO.md         # Información detallada de Rick and Morty API
 ```
 
 ## Aprendizajes Clave
 
-1. **Fetch API**: Uso de promesas y async/await para peticiones HTTP
-2. **Métodos REST**: Comprender cuándo usar cada método HTTP
-3. **Códigos de Estado**: Interpretación correcta de las respuestas del servidor
+1. **Fetch API**: Uso de promesas y async/await para peticiones HTTP asíncronas
+2. **Método GET**: Comprensión profunda del método HTTP más común
+   - Obtención de recursos individuales por ID
+   - Consulta de listas paginadas
+   - Manejo de parámetros en la URL
+3. **Códigos de Estado**: Interpretación de respuestas del servidor
+   - **200 OK**: Petición exitosa con datos
+   - **404 Not Found**: Recurso no encontrado (ID inválido)
 4. **CORS**: Entender las políticas de seguridad entre dominios
-5. **Developer Tools**: Uso efectivo de las herramientas de debugging del navegador
-6. **JavaScript Moderno**: Manejo de eventos, manipulación del DOM y programación asíncrona
+   - Access-Control-Allow-Origin: *
+   - Peticiones sin autenticación
+5. **APIs RESTful**: Estructura y convenciones de APIs REST modernas
+   - Endpoints semánticos (/character, /location, /episode)
+   - Respuestas en formato JSON
+   - Paginación de resultados
+6. **Developer Tools**: Uso efectivo de las herramientas de debugging
+   - Inspección de peticiones en Network tab
+   - Análisis de headers y tiempos de respuesta
+7. **JavaScript Moderno**: 
+   - Manipulación dinámica del DOM
+   - Manejo de estado de la aplicación
+   - Eventos y listeners
+   - Programación asíncrona
+8. **UX/UI**: Feedback visual durante operaciones asíncronas
 
-## Mejoras Futuras
+## 📖 Información Adicional
 
-- [ ] Implementar PATCH para actualizaciones parciales
-- [ ] Agregar autenticación con tokens
-- [ ] Implementar manejo de errores más robusto
-- [ ] Agregar tests unitarios
-- [ ] Crear versión con Axios como alternativa a Fetch
-- [ ] Implementar rate limiting visual
-- [ ] Agregar opción de exportar resultados a CSV/JSON
+Para más detalles sobre la API de Rick and Morty, consulta el archivo [API_INFO.md](API_INFO.md) que incluye:
+- Endpoints disponibles para cada recurso
+- Ejemplos completos de respuestas JSON
+- Personajes, ubicaciones y episodios populares con IDs
+- Tips y buenas prácticas para la exploración
+
+## Funcionalidades Implementadas
+
+- [x] Selector de tipo de recurso (Personajes, Ubicaciones, Episodios)
+- [x] Peticiones GET individuales por ID
+- [x] Peticiones GET de listas con paginación
+- [x] Visualización enriquecida según tipo de recurso
+- [x] Imágenes de personajes
+- [x] Badges de estado con colores
+- [x] Sistema de logs con timestamps
+- [x] Medición de tiempos de respuesta
+- [x] Análisis de CORS y headers
+- [x] Interfaz responsiva y moderna
+- [x] Validación de IDs según recurso
+- [x] Manejo de errores 404
+- [x] Estados de carga animados
+- [x] Estadísticas de la API
+
+## Posibles Mejoras Futuras
+
+- [ ] Implementar búsqueda por nombre/filtros
+- [ ] Agregar navegación de paginación (siguiente/anterior)
+- [ ] Crear favoritos con LocalStorage
+- [ ] Implementar modo claro/oscuro toggle
+- [ ] Agregar gráficos de estadísticas
+- [ ] Exportar resultados a JSON/CSV
+- [ ] Historial de búsquedas
+- [ ] Comparador de personajes lado a lado
 
 ## Conclusiones
 
-Esta práctica permite comprender de manera práctica y visual cómo funcionan las peticiones HTTP, los métodos REST y las políticas CORS. La implementación con Fetch API demuestra cómo las aplicaciones frontend modernas se comunican con APIs backend, fundamental para el desarrollo de aplicaciones web completas.
+Este explorador de la API de Rick and Morty permite comprender de manera práctica y visual:
+
+1. **Peticiones HTTP GET**: La forma más común de obtener datos de una API REST
+2. **Códigos de Estado**: Interpretación de respuestas exitosas (200) y errores (404)
+3. **CORS**: Políticas de seguridad para peticiones cross-origin
+4. **JSON**: Formato estándar para intercambio de datos
+5. **APIs RESTful**: Estructura y convenciones de APIs modernas
+6. **Programación Asíncrona**: Uso de async/await para operaciones no bloqueantes
+7. **UX en aplicaciones web**: Feedback visual y estados de carga
+
+La implementación con Fetch API y una interfaz moderna demuestra cómo las aplicaciones frontend se comunican efectivamente con APIs backend, fundamental para el desarrollo web full-stack.
+
+## 🎓 Valor Educativo
+
+Esta práctica es ideal para:
+- Estudiantes aprendiendo desarrollo web
+- Práctica de conceptos HTTP/REST
+- Comprensión de APIs públicas
+- Análisis de políticas CORS
+- Debugging con Developer Tools
+- Diseño de interfaces modernas y responsivas
+
+---
+
+**Repositorio**: DesarrolloSoftwareAPE5  
+**Autor**: Desarrollo de Software - Quinto Ciclo  
+**API**: [Rick and Morty API](https://rickandmortyapi.com)  
+**Fecha**: 2025
 
 

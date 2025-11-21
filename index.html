@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTTP Client Dashboard</title>
+  <title>Rick & Morty API Explorer</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -20,15 +20,34 @@
     <header class="header">
       <div class="header-content">
         <div class="logo">
-          <i class="fas fa-code"></i>
-          <h1>HTTP Client Dashboard</h1>
+          <i class="fas fa-flask"></i>
+          <h1>Rick & Morty API Explorer</h1>
         </div>
         <div class="header-subtitle">
           <i class="fas fa-network-wired"></i>
-          <p>Métodos REST · Códigos de Estado · CORS</p>
+          <p>Explorador de Personajes, Ubicaciones y Episodios</p>
         </div>
       </div>
     </header>
+
+    <!-- Selector de Tipo de Recurso -->
+    <div class="resource-selector">
+      <button class="resource-btn active" data-resource="character">
+        <i class="fas fa-user"></i>
+        <span>Personajes</span>
+        <small>826 disponibles</small>
+      </button>
+      <button class="resource-btn" data-resource="location">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Ubicaciones</span>
+        <small>126 disponibles</small>
+      </button>
+      <button class="resource-btn" data-resource="episode">
+        <i class="fas fa-tv"></i>
+        <span>Episodios</span>
+        <small>51 disponibles</small>
+      </button>
+    </div>
 
     <!-- Dashboard Grid -->
     <div class="dashboard-grid">
@@ -36,43 +55,34 @@
       <div class="card card-control">
         <div class="card-header">
           <i class="fas fa-sliders-h"></i>
-          <h2>Panel de Control</h2>
+          <h2>Panel de Control GET</h2>
         </div>
         <div class="card-body">
           <div class="input-group">
             <label for="resourceId">
               <i class="fas fa-hashtag"></i>
-              ID del Recurso
+              <span id="labelResource">ID del Personaje</span>
             </label>
-            <input type="number" id="resourceId" placeholder="Ingrese ID" value="1">
+            <input type="number" id="resourceId" placeholder="1" value="1" min="1">
+            <small class="input-hint" id="inputHint">Ingresa un número entre 1 y 826</small>
           </div>
 
-          <div class="methods-grid">
-            <button id="btnGet" class="btn-method btn-get">
+          <div class="methods-grid-single">
+            <button id="btnGetResource" class="btn-method btn-get-large">
               <i class="fas fa-download"></i>
-              <span>GET</span>
-              <small>Obtener</small>
+              <span>Obtener Recurso (GET)</span>
+              <small>Enviar petición HTTP GET</small>
             </button>
-            <button id="btnPost" class="btn-method btn-post">
-              <i class="fas fa-plus-circle"></i>
-              <span>POST</span>
-              <small>Crear</small>
-            </button>
-            <button id="btnPut" class="btn-method btn-put">
-              <i class="fas fa-edit"></i>
-              <span>PUT</span>
-              <small>Actualizar</small>
-            </button>
-            <button id="btnDelete" class="btn-method btn-delete">
-              <i class="fas fa-trash-alt"></i>
-              <span>DELETE</span>
-              <small>Eliminar</small>
+            <button id="btnGetAll" class="btn-method btn-get-all">
+              <i class="fas fa-list"></i>
+              <span>Obtener Todos (GET)</span>
+              <small>Ver lista paginada</small>
             </button>
           </div>
 
           <div class="info-box">
             <i class="fas fa-info-circle"></i>
-            <p>Haz clic en un método para enviar una petición HTTP a la API</p>
+            <p id="infoText">Haz clic en un botón para enviar una petición GET a la API</p>
           </div>
         </div>
       </div>
@@ -111,6 +121,39 @@
         </div>
       </div>
 
+      <!-- Estadísticas -->
+      <div class="card card-stats">
+        <div class="card-header">
+          <i class="fas fa-chart-bar"></i>
+          <h2>Estadísticas de la API</h2>
+        </div>
+        <div class="card-body">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <i class="fas fa-user-friends stat-icon"></i>
+              <div class="stat-info">
+                <span class="stat-number">826</span>
+                <span class="stat-label">Personajes</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-globe stat-icon"></i>
+              <div class="stat-info">
+                <span class="stat-number">126</span>
+                <span class="stat-label">Ubicaciones</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-film stat-icon"></i>
+              <div class="stat-info">
+                <span class="stat-number">51</span>
+                <span class="stat-label">Episodios</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Guía Rápida -->
       <div class="card card-guide">
         <div class="card-header">
@@ -122,29 +165,29 @@
             <div class="guide-step">
               <div class="step-number">1</div>
               <div class="step-content">
-                <h3>DevTools</h3>
-                <p>Presiona <kbd>F12</kbd> para abrir las herramientas de desarrollador</p>
+                <h3>Seleccionar</h3>
+                <p>Elige entre <strong>Personajes</strong>, <strong>Ubicaciones</strong> o <strong>Episodios</strong></p>
               </div>
             </div>
             <div class="guide-step">
               <div class="step-number">2</div>
               <div class="step-content">
-                <h3>Network</h3>
-                <p>Ve a la pestaña <strong>Network</strong> para ver las peticiones</p>
+                <h3>Buscar</h3>
+                <p>Ingresa un ID válido o consulta todos los recursos</p>
               </div>
             </div>
             <div class="guide-step">
               <div class="step-number">3</div>
               <div class="step-content">
-                <h3>Enviar</h3>
-                <p>Selecciona un método HTTP y observa los headers y CORS</p>
+                <h3>Observar</h3>
+                <p>Abre <kbd>F12</kbd> → <strong>Network</strong> para ver headers y CORS</p>
               </div>
             </div>
             <div class="guide-step">
               <div class="step-number">4</div>
               <div class="step-content">
                 <h3>Analizar</h3>
-                <p>Revisa los resultados, tiempos y códigos de estado</p>
+                <p>Revisa tiempos de respuesta y códigos de estado HTTP</p>
               </div>
             </div>
           </div>
@@ -161,9 +204,9 @@
         </div>
         <div class="footer-right">
           <span>API:</span>
-          <a href="https://jsonplaceholder.typicode.com" target="_blank">
+          <a href="https://rickandmortyapi.com" target="_blank">
             <i class="fas fa-external-link-alt"></i>
-            JSONPlaceholder
+            Rick and Morty API
           </a>
         </div>
       </div>
