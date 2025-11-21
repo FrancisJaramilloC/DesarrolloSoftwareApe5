@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTTP Client Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <i class="fas fa-code"></i>
+          <h1>HTTP Client Dashboard</h1>
+        </div>
+        <div class="header-subtitle">
+          <i class="fas fa-network-wired"></i>
+          <p>Métodos REST · Códigos de Estado · CORS</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Panel de Control -->
+      <div class="card card-control">
+        <div class="card-header">
+          <i class="fas fa-sliders-h"></i>
+          <h2>Panel de Control</h2>
+        </div>
+        <div class="card-body">
+          <div class="input-group">
+            <label for="resourceId">
+              <i class="fas fa-hashtag"></i>
+              ID del Recurso
+            </label>
+            <input type="number" id="resourceId" placeholder="Ingrese ID" value="1">
+          </div>
+
+          <div class="methods-grid">
+            <button id="btnGet" class="btn-method btn-get">
+              <i class="fas fa-download"></i>
+              <span>GET</span>
+              <small>Obtener</small>
+            </button>
+            <button id="btnPost" class="btn-method btn-post">
+              <i class="fas fa-plus-circle"></i>
+              <span>POST</span>
+              <small>Crear</small>
+            </button>
+            <button id="btnPut" class="btn-method btn-put">
+              <i class="fas fa-edit"></i>
+              <span>PUT</span>
+              <small>Actualizar</small>
+            </button>
+            <button id="btnDelete" class="btn-method btn-delete">
+              <i class="fas fa-trash-alt"></i>
+              <span>DELETE</span>
+              <small>Eliminar</small>
+            </button>
+          </div>
+
+          <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            <p>Haz clic en un método para enviar una petición HTTP a la API</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resultados -->
+      <div class="card card-results">
+        <div class="card-header">
+          <i class="fas fa-chart-line"></i>
+          <h2>Resultados</h2>
+        </div>
+        <div class="card-body">
+          <div id="resultado" class="resultado-container">
+            <div class="empty-state">
+              <i class="fas fa-inbox"></i>
+              <p>Sin resultados</p>
+              <small>Realiza una petición para ver los resultados</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Registro de Consola -->
+      <div class="card card-console">
+        <div class="card-header">
+          <i class="fas fa-terminal"></i>
+          <h2>Registro de Actividad</h2>
+        </div>
+        <div class="card-body">
+          <div id="consoleLog" class="console-container">
+            <div class="empty-state">
+              <i class="fas fa-clock"></i>
+              <p>Esperando actividad</p>
+              <small>Los logs aparecerán aquí...</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guía Rápida -->
+      <div class="card card-guide">
+        <div class="card-header">
+          <i class="fas fa-book"></i>
+          <h2>Guía Rápida</h2>
+        </div>
+        <div class="card-body">
+          <div class="guide-steps">
+            <div class="guide-step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h3>DevTools</h3>
+                <p>Presiona <kbd>F12</kbd> para abrir las herramientas de desarrollador</p>
+              </div>
+            </div>
+            <div class="guide-step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h3>Network</h3>
+                <p>Ve a la pestaña <strong>Network</strong> para ver las peticiones</p>
+              </div>
+            </div>
+            <div class="guide-step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h3>Enviar</h3>
+                <p>Selecciona un método HTTP y observa los headers y CORS</p>
+              </div>
+            </div>
+            <div class="guide-step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h3>Analizar</h3>
+                <p>Revisa los resultados, tiempos y códigos de estado</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-left">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Desarrollo de Software - Quinto Ciclo</span>
+        </div>
+        <div class="footer-right">
+          <span>API:</span>
+          <a href="https://jsonplaceholder.typicode.com" target="_blank">
+            <i class="fas fa-external-link-alt"></i>
+            JSONPlaceholder
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
